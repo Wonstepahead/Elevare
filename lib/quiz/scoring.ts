@@ -1,5 +1,7 @@
 import type { HollandCode, HollandScores, Career, Major } from "@/lib/types";
 
+export type { HollandScores };
+
 const HOLLAND_CODES: HollandCode[] = ["R", "I", "A", "S", "E", "C"];
 
 export function createEmptyScores(): HollandScores {
