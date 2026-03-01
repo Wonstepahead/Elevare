@@ -37,13 +37,13 @@ export default function SignupPage() {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="w-full max-w-md text-center">
-          <h1 className="text-2xl font-bold mb-4">Check your email</h1>
-          <p className="text-gray-400 mb-6">
+          <h1 className="text-2xl font-bold mb-4 text-foreground">Check your email</h1>
+          <p className="text-muted mb-6">
             We&apos;ve sent you a link to confirm your account. Click the link in your email to get started.
           </p>
           <Link
             href="/login"
-            className="inline-block px-6 py-3 rounded-lg bg-accent-cyan text-background font-medium hover:opacity-90 transition"
+            className="inline-block px-6 py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-secondary transition shadow-soft"
           >
             Go to Log in
           </Link>
@@ -55,10 +55,10 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Create your Elevare account</h1>
+        <h1 className="text-2xl font-bold text-center mb-6 text-foreground">Create your Elevare account</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="fullName" className="block text-sm text-gray-400 mb-2">
+            <label htmlFor="fullName" className="block text-sm text-muted mb-2">
               Full name
             </label>
             <input
@@ -66,12 +66,12 @@ export default function SignupPage() {
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-cyan focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent"
               placeholder="Your name"
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm text-gray-400 mb-2">
+            <label htmlFor="email" className="block text-sm text-muted mb-2">
               Email
             </label>
             <input
@@ -80,12 +80,12 @@ export default function SignupPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-cyan focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm text-gray-400 mb-2">
+            <label htmlFor="password" className="block text-sm text-muted mb-2">
               Password
             </label>
             <input
@@ -95,24 +95,24 @@ export default function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-cyan focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent"
               placeholder="At least 6 characters"
             />
           </div>
           {error && (
-            <p className="text-red-400 text-sm">{error}</p>
+            <p className="text-red-500 text-sm">{error}</p>
           )}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-lg bg-accent-cyan text-background font-medium hover:opacity-90 transition disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-secondary transition disabled:opacity-50 shadow-soft"
           >
             {loading ? "Creating account..." : "Sign up"}
           </button>
         </form>
-        <p className="mt-6 text-center text-gray-400 text-sm">
+        <p className="mt-6 text-center text-muted text-sm">
           Already have an account?{" "}
-          <Link href="/login" className="text-accent-cyan hover:underline">
+          <Link href="/login" className="text-accent-primary hover:underline">
             Log in
           </Link>
         </p>

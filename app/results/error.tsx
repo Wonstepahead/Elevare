@@ -12,8 +12,8 @@ export default function ResultsError({
   return (
     <div className="min-h-screen pt-24 pb-16 px-6 flex items-center justify-center">
       <div className="max-w-md text-center">
-        <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
-        <p className="text-gray-400 mb-6">
+        <h1 className="text-2xl font-bold mb-4 text-foreground">Something went wrong</h1>
+        <p className="text-muted mb-6">
           {error.message.includes("relation") || error.message.includes("does not exist")
             ? "The database may not be set up yet. Run the Supabase migrations and seed from the README."
             : "We couldn't load your results. Please try again."}
@@ -21,13 +21,13 @@ export default function ResultsError({
         <div className="flex gap-4 justify-center">
           <button
             onClick={reset}
-            className="px-6 py-3 rounded-lg bg-accent-cyan text-background font-medium hover:opacity-90 transition"
+            className="px-6 py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-secondary transition"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="px-6 py-3 rounded-lg border border-white/20 text-gray-400 font-medium hover:bg-white/5 transition"
+            className="px-6 py-3 rounded-xl border border-border text-muted font-medium hover:bg-border transition"
           >
             Go home
           </Link>

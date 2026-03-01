@@ -82,8 +82,8 @@ export default function MajorQuizPage() {
     return (
       <div className="min-h-screen pt-24 pb-16 px-6">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold mb-2">Your Major Matches</h1>
-          <p className="text-gray-400 mb-12">
+          <h1 className="text-3xl font-bold mb-2 text-foreground">Your Major Matches</h1>
+          <p className="text-muted mb-12">
             Based on your answers, these college majors align with your interests and strengths.
           </p>
 
@@ -91,17 +91,17 @@ export default function MajorQuizPage() {
             {results.map((major, i) => (
               <div
                 key={major.id}
-                className="p-6 rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple/30 transition"
+                className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover"
               >
                 <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-10 h-10 rounded-lg bg-accent-purple/20 text-accent-purple font-bold flex items-center justify-center">
+                  <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-purple/10 text-accent-purple font-bold flex items-center justify-center">
                     {i + 1}
                   </span>
                   <div>
-                    <h3 className="text-xl font-semibold text-white">{major.name}</h3>
-                    <p className="text-gray-400 mt-1">{major.description}</p>
+                    <h3 className="text-xl font-semibold text-foreground">{major.name}</h3>
+                    <p className="text-muted mt-1">{major.description}</p>
                     {major.related_careers && major.related_careers.length > 0 && (
-                      <p className="text-sm text-accent-purple mt-2">
+                      <p className="text-sm text-accent-purple font-medium mt-2">
                         Related careers: {major.related_careers.slice(0, 3).join(", ")}
                       </p>
                     )}
@@ -115,19 +115,19 @@ export default function MajorQuizPage() {
             <button
               onClick={handleSaveResults}
               disabled={saving || saveSuccess}
-              className="px-6 py-3 rounded-lg bg-accent-purple text-white font-medium hover:opacity-90 transition disabled:opacity-50"
+              className="px-6 py-3 rounded-xl bg-accent-purple text-white font-medium hover:bg-accent-secondary transition disabled:opacity-50 shadow-soft"
             >
               {saveSuccess ? "Saved!" : saving ? "Saving..." : "Save Results"}
             </button>
             <Link
               href="/results"
-              className="px-6 py-3 rounded-lg border border-accent-cyan text-accent-cyan font-medium hover:bg-accent-cyan/10 transition"
+              className="px-6 py-3 rounded-xl border-2 border-accent-primary text-accent-primary font-medium hover:bg-accent-primary/5 transition"
             >
               View My Results
             </Link>
             <Link
               href="/major-quiz"
-              className="px-6 py-3 rounded-lg border border-white/20 text-gray-400 font-medium hover:bg-white/5 transition"
+              className="px-6 py-3 rounded-xl border border-border text-muted font-medium hover:bg-border transition"
             >
               Retake Quiz
             </Link>
@@ -140,8 +140,8 @@ export default function MajorQuizPage() {
   return (
     <div className="min-h-screen pt-24 pb-16 px-6">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">College Major Finder</h1>
-        <p className="text-gray-400 mb-12">
+        <h1 className="text-3xl font-bold mb-2 text-foreground">College Major Finder</h1>
+        <p className="text-muted mb-12">
           Perfect for high school students! Discover which college majors match your interests and learning style.
         </p>
 
@@ -160,7 +160,7 @@ export default function MajorQuizPage() {
         {currentIndex > 0 && (
           <button
             onClick={handleBack}
-            className="text-gray-400 hover:text-white transition"
+            className="text-muted hover:text-foreground transition"
           >
             ← Back
           </button>

@@ -32,10 +32,10 @@ export default function LoginForm() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center mb-6">Log in to Elevare</h1>
+        <h1 className="text-2xl font-bold text-center mb-6 text-foreground">Log in to Elevare</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm text-gray-400 mb-2">
+            <label htmlFor="email" className="block text-sm text-muted mb-2">
               Email
             </label>
             <input
@@ -44,12 +44,12 @@ export default function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-cyan focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm text-gray-400 mb-2">
+            <label htmlFor="password" className="block text-sm text-muted mb-2">
               Password
             </label>
             <input
@@ -58,23 +58,23 @@ export default function LoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-cyan focus:border-transparent"
+              className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent"
             />
           </div>
           {error && (
-            <p className="text-red-400 text-sm">{error}</p>
+            <p className="text-red-500 text-sm">{error}</p>
           )}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-lg bg-accent-cyan text-background font-medium hover:opacity-90 transition disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-secondary transition disabled:opacity-50 shadow-soft"
           >
             {loading ? "Signing in..." : "Log in"}
           </button>
         </form>
-        <p className="mt-6 text-center text-gray-400 text-sm">
+        <p className="mt-6 text-center text-muted text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-accent-cyan hover:underline">
+          <Link href="/signup" className="text-accent-primary hover:underline">
             Sign up
           </Link>
         </p>
