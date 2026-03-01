@@ -7,6 +7,10 @@ export interface Career {
   holland_codes: HollandCode[];
   salary_min?: number;
   salary_max?: number;
+  /** Specific job titles within this career path */
+  job_options?: string[];
+  /** How future-proof this career is (1-10) */
+  future_proof_score?: number;
 }
 
 export interface Major {
@@ -15,6 +19,20 @@ export interface Major {
   description: string;
   holland_codes: HollandCode[];
   related_careers?: string[];
+  /** Top colleges/universities for this major */
+  top_schools?: string[];
+  /** How future-proof this major is (1-10) */
+  future_proof_score?: number;
+}
+
+export interface CareerMatch {
+  career: Career;
+  match_percentage: number;
+}
+
+export interface MajorMatch {
+  major: Major;
+  match_percentage: number;
 }
 
 export interface HollandScores {

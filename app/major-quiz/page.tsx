@@ -14,13 +14,13 @@ import {
   matchMajors,
   type HollandScores,
 } from "@/lib/quiz/scoring";
-import type { Major } from "@/lib/types";
+import type { MajorMatch } from "@/lib/types";
 
 export default function MajorQuizPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [scores, setScores] = useState<HollandScores>(createEmptyScores());
-  const [results, setResults] = useState<Major[] | null>(null);
+  const [results, setResults] = useState<MajorMatch[] | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const router = useRouter();
@@ -72,7 +72,7 @@ export default function MajorQuizPage() {
     const { error } = await supabase.from("major_quiz_results").insert({
       user_id: user.id,
       holland_scores: finalScores,
-      top_majors: results.map((m) => ({ id: m.id, name: m.name, description: m.description })),
+      top_majors: results.map((r) => ({ id: r.major.id, name: r.major.name, description: r.major.description, match_percentage: r.match_percentage, top_schools: r.major.top_schools, future_proof_score: r.major.future_proof_score })),
     });
     setSaving(false);
     if (!error) setSaveSuccess(true);
@@ -88,27 +88,55 @@ export default function MajorQuizPage() {
           </p>
 
           <div className="space-y-6 mb-12">
-            {results.map((major, i) => (
-              <div
-                key={major.id}
-                className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover"
-              >
-                <div className="flex items-start gap-4">
-                  <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-purple/10 text-accent-purple font-bold flex items-center justify-center">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground">{major.name}</h3>
-                    <p className="text-muted mt-1">{major.description}</p>
-                    {major.related_careers && major.related_careers.length > 0 && (
-                      <p className="text-sm text-accent-purple font-medium mt-2">
-                        Related careers: {major.related_careers.slice(0, 3).join(", ")}
-                      </p>
-                    )}
+            {results.map((match, i) => {
+              const { major, match_percentage } = match;
+              return (
+                <div
+                  key={major.id}
+                  className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover"
+                >
+                  <div className="flex items-start gap-4">
+                    <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-accent-purple/10 text-accent-purple font-bold flex items-center justify-center">
+                      {i + 1}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 className="text-xl font-semibold text-foreground">{major.name}</h3>
+                        <span className="px-2.5 py-0.5 rounded-lg bg-accent-purple/15 text-accent-purple text-sm font-semibold">
+                          {match_percentage}% match
+                        </span>
+                        {major.future_proof_score != null && (
+                          <span className="px-2.5 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-sm font-medium" title="Future-proof score (1-10)">
+                            Future-proof: {major.future_proof_score}/10
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-muted mt-1">{major.description}</p>
+                      {major.related_careers && major.related_careers.length > 0 && (
+                        <p className="text-sm text-accent-purple font-medium mt-2">
+                          Related careers: {major.related_careers.slice(0, 3).join(", ")}
+                        </p>
+                      )}
+                      {major.top_schools && major.top_schools.length > 0 && (
+                        <div className="mt-3">
+                          <p className="text-sm font-medium text-foreground mb-1">Top schools for this major:</p>
+                          <div className="flex flex-wrap gap-2">
+                            {major.top_schools.map((school) => (
+                              <span
+                                key={school}
+                                className="px-2.5 py-1 rounded-lg bg-muted text-muted-foreground text-xs font-medium"
+                              >
+                                {school}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="flex flex-wrap gap-4">

@@ -1,8 +1,11 @@
-import type { HollandCode, HollandScores, Career, Major } from "@/lib/types";
+import type { HollandCode, HollandScores, Career, Major, CareerMatch, MajorMatch } from "@/lib/types";
 
 export type { HollandScores };
 
 const HOLLAND_CODES: HollandCode[] = ["R", "I", "A", "S", "E", "C"];
+
+/** Max possible Holland match score (perfect 3-code alignment) */
+const MAX_MATCH_SCORE = 6;
 
 export function createEmptyScores(): HollandScores {
   return { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
@@ -39,34 +42,49 @@ function hollandMatchScore(
   return score;
 }
 
+/** Convert raw match score (0-6) to percentage (0-100) */
+function scoreToPercentage(score: number): number {
+  return Math.round((score / MAX_MATCH_SCORE) * 100);
+}
+
 export function matchCareers(
   scores: HollandScores,
   careers: Career[],
   limit = 8
-): Career[] {
+): CareerMatch[] {
   const topCodes = getTopCodes(scores, 3);
-  return [...careers]
+  const scored = [...careers]
     .map((career) => ({
       career,
       score: hollandMatchScore(topCodes, career.holland_codes),
     }))
     .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(({ career }) => career);
+    .slice(0, limit);
+
+  const maxScore = scored[0]?.score ?? 1;
+  return scored.map(({ career, score }) => ({
+    career,
+    match_percentage: maxScore > 0 ? Math.min(100, scoreToPercentage(score)) : 0,
+  }));
 }
 
 export function matchMajors(
   scores: HollandScores,
   majors: Major[],
   limit = 8
-): Major[] {
+): MajorMatch[] {
   const topCodes = getTopCodes(scores, 3);
-  return [...majors]
+  const scored = [...majors]
     .map((major) => ({
       major,
       score: hollandMatchScore(topCodes, major.holland_codes),
     }))
     .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(({ major }) => major);
+    .slice(0, limit);
+
+  const maxScore = scored[0]?.score ?? 1;
+  return scored.map(({ major, score }) => ({
+    major,
+    match_percentage: maxScore > 0 ? Math.min(100, scoreToPercentage(score)) : 0,
+  }));
 }
