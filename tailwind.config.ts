@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,15 +10,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#fafbfc",
-        foreground: "#111827",
-        muted: "#6b7280",
-        border: "#e5e7eb",
-        "accent-primary": "#2563eb",
-        "accent-secondary": "#7c3aed",
-        "accent-cyan": "#0ea5e9",
-        "accent-purple": "#8b5cf6",
-        card: "#ffffff",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        muted: "var(--muted)",
+        border: "var(--border)",
+        "accent-primary": "var(--accent-primary)",
+        "accent-secondary": "var(--accent-secondary)",
+        "accent-cyan": "var(--accent-cyan)",
+        "accent-purple": "var(--accent-purple)",
+        card: "var(--card)",
       },
       boxShadow: {
         "soft": "0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)",

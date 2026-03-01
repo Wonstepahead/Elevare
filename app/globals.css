@@ -5,11 +5,25 @@
 :root {
   --background: #fafbfc;
   --foreground: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
   --accent-primary: #2563eb;
   --accent-secondary: #7c3aed;
   --accent-cyan: #0ea5e9;
   --accent-purple: #8b5cf6;
-  --border: #e5e7eb;
+  --card: #ffffff;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --muted: #94a3b8;
+  --border: #334155;
+  --accent-primary: #60a5fa;
+  --accent-secondary: #a78bfa;
+  --accent-cyan: #38bdf8;
+  --accent-purple: #a78bfa;
+  --card: #1e293b;
 }
 
 body {
@@ -20,6 +34,10 @@ body {
 /* Modern card style */
 .card-hover {
   @apply transition-all duration-300 hover:shadow-soft-lg hover:-translate-y-0.5;
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.4);
 }
 
 /* Smooth scroll */

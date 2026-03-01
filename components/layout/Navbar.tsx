@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { useEffect, useMemo, useState } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -38,7 +39,8 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-6">
+          <ThemeToggle />
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -100,6 +102,10 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-border bg-card py-4 px-4">
           <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between pb-4 border-b border-border">
+              <span className="text-sm text-muted">Theme</span>
+              <ThemeToggle />
+            </div>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
