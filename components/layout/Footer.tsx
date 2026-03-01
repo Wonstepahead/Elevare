@@ -14,6 +14,10 @@ export function Footer() {
             <Link href="/majors" className="hover:text-foreground transition">Majors</Link>
             <Link href="/career-quiz" className="hover:text-foreground transition">Career Quiz</Link>
             <Link href="/major-quiz" className="hover:text-foreground transition">Major Quiz</Link>
+            <Link href="/planning" className="hover:text-foreground transition">Planning</Link>
+            <Link href="/mapping" className="hover:text-foreground transition">Major↔Career</Link>
+            <Link href="/colleges" className="hover:text-foreground transition">Colleges</Link>
+            <Link href="/extracurriculars" className="hover:text-foreground transition">Extracurriculars</Link>
             <Link href="/faq" className="hover:text-foreground transition">FAQ</Link>
           </div>
         </div>

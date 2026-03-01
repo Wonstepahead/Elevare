@@ -22,9 +22,10 @@ export default function MajorsPage() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {majors.map((major) => (
-            <div
+            <Link
               key={major.id}
-              className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover"
+              href={`/majors/${major.id}`}
+              className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover block"
             >
               <h3 className="text-lg font-semibold text-foreground mb-2">{major.name}</h3>
               <p className="text-muted text-sm mb-4 line-clamp-2">{major.description}</p>
@@ -33,7 +34,7 @@ export default function MajorsPage() {
                   Careers: {major.related_careers.slice(0, 2).join(", ")}
                 </p>
               )}
-            </div>
+            </Link>
           ))}
         </div>
       </div>

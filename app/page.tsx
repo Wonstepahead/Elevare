@@ -84,6 +84,46 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Student-specific features */}
+      <section className="py-24 px-6 border-y border-border">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-4 text-foreground">Built for High School Students</h2>
+          <p className="text-muted text-center mb-12 max-w-2xl mx-auto">
+            Planning tools designed to help you navigate from high school to college and beyond.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link
+              href="/planning"
+              className="group p-6 rounded-2xl border-2 border-border hover:border-accent-primary transition bg-card"
+            >
+              <h3 className="text-lg font-semibold mb-2 text-foreground group-hover:text-accent-primary transition">High School → College Planning</h3>
+              <p className="text-muted text-sm">Grade-by-grade roadmap from 9th to 12th.</p>
+            </Link>
+            <Link
+              href="/mapping"
+              className="group p-6 rounded-2xl border-2 border-border hover:border-accent-purple transition bg-card"
+            >
+              <h3 className="text-lg font-semibold mb-2 text-foreground group-hover:text-accent-purple transition">Major-to-Career Mapping</h3>
+              <p className="text-muted text-sm">See how majors connect to career paths.</p>
+            </Link>
+            <Link
+              href="/colleges/compare"
+              className="group p-6 rounded-2xl border-2 border-border hover:border-accent-primary transition bg-card"
+            >
+              <h3 className="text-lg font-semibold mb-2 text-foreground group-hover:text-accent-primary transition">College Comparison</h3>
+              <p className="text-muted text-sm">Compare schools side-by-side.</p>
+            </Link>
+            <Link
+              href="/extracurriculars"
+              className="group p-6 rounded-2xl border-2 border-border hover:border-accent-purple transition bg-card"
+            >
+              <h3 className="text-lg font-semibold mb-2 text-foreground group-hover:text-accent-purple transition">Extracurricular Recommendations</h3>
+              <p className="text-muted text-sm">Activities that match your interests.</p>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Explore careers & majors */}
       <section className="py-24 px-6 bg-card border-y border-border">
         <div className="max-w-6xl mx-auto">

@@ -35,6 +35,28 @@ export interface MajorMatch {
   match_percentage: number;
 }
 
+export interface Extracurricular {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  holland_codes: HollandCode[];
+  related_majors?: string[];
+  related_careers?: string[];
+  grade_levels?: string[];
+}
+
+export interface College {
+  id: string;
+  name: string;
+  location: string;
+  type: "public" | "private" | "liberal-arts" | "tech" | "art" | "music";
+  acceptance_rate?: number;
+  cost_annual?: number;
+  student_body?: number;
+  strong_majors?: string[];
+}
+
 export interface HollandScores {
   R: number;
   I: number;

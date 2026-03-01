@@ -22,9 +22,10 @@ export default function CareersPage() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {careers.map((career) => (
-            <div
+            <Link
               key={career.id}
-              className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover"
+              href={`/careers/${career.id}`}
+              className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover block"
             >
               <h3 className="text-lg font-semibold text-foreground mb-2">{career.name}</h3>
               <p className="text-muted text-sm mb-4 line-clamp-2">{career.description}</p>
@@ -33,7 +34,7 @@ export default function CareersPage() {
                   ${(career.salary_min / 1000).toFixed(0)}K - ${(career.salary_max / 1000).toFixed(0)}K
                 </p>
               )}
-            </div>
+            </Link>
           ))}
         </div>
       </div>
