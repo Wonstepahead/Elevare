@@ -7,7 +7,7 @@ import { majors } from "@/lib/data/majors";
 import { careers } from "@/lib/data/careers";
 import { recommendByMajor, recommendByCareer } from "@/lib/utils/extracurriculars";
 
-const CATEGORIES = [...new Set(extracurriculars.map((e) => e.category))].sort();
+const CATEGORIES = Array.from(new Set(extracurriculars.map((e) => e.category))).sort();
 
 export default function ExtracurricularsPage() {
   const [filter, setFilter] = useState<"all" | "major" | "career">("all");
