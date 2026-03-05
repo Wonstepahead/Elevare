@@ -3,16 +3,16 @@ import { careers } from "@/lib/data/careers";
 
 export default function CareersPage() {
   return (
-    <div className="min-h-screen pt-24 pb-16 px-6">
+    <div className="min-h-screen pt-28 pb-20 px-4 sm:px-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4 text-foreground">Explore Careers</h1>
-        <p className="text-muted mb-12 max-w-2xl">
-          Browse our catalog of 50+ careers. Take the quiz to get personalized matches based on your interests.
-        </p>
-        <div className="mb-8">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold tracking-tight text-foreground mb-3">Explore Careers</h1>
+          <p className="text-muted max-w-2xl mb-6">
+            Browse 50+ career paths. Take the quiz to get personalized matches based on your interests.
+          </p>
           <Link
             href="/career-quiz"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-secondary transition"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-primary/90 transition shadow-soft"
           >
             Take Career Quiz
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,14 +20,14 @@ export default function CareersPage() {
             </svg>
           </Link>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {careers.map((career) => (
             <Link
               key={career.id}
               href={`/careers/${career.id}`}
-              className="p-6 rounded-2xl bg-card border border-border shadow-soft card-hover block"
+              className="group p-6 rounded-2xl bg-card border border-border shadow-soft card-hover block"
             >
-              <h3 className="text-lg font-semibold text-foreground mb-2">{career.name}</h3>
+              <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-accent-primary transition">{career.name}</h3>
               <p className="text-muted text-sm mb-4 line-clamp-2">{career.description}</p>
               {career.salary_min && career.salary_max && (
                 <p className="text-sm text-accent-primary font-medium">

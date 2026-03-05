@@ -13,9 +13,9 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
         <span>Question {current} of {total}</span>
         <span>{Math.round(percent)}%</span>
       </div>
-      <div className="h-2 w-full rounded-full bg-border overflow-hidden">
+      <div className="h-2.5 w-full rounded-full bg-muted/30 overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-accent-primary to-accent-purple transition-all duration-300"
+          className="h-full rounded-full bg-gradient-to-r from-accent-primary to-accent-purple transition-all duration-500 ease-out"
           style={{ width: `${percent}%` }}
         />
       </div>

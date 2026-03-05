@@ -20,10 +20,10 @@ export function QuestionCard({ question, selectedValue, onSelect }: QuestionCard
             key={option.value}
             type="button"
             onClick={() => onSelect(option.value)}
-            className={`w-full text-left px-6 py-4 rounded-xl border-2 transition-all ${
+            className={`w-full text-left px-6 py-4 rounded-xl border-2 transition-all duration-200 ${
               selectedValue === option.value
-                ? "border-accent-primary bg-accent-primary/10 text-foreground"
-                : "border-border bg-card text-foreground hover:border-accent-primary/50 hover:bg-accent-primary/5"
+                ? "border-accent-primary bg-accent-primary/10 text-foreground shadow-soft"
+                : "border-border bg-card text-foreground hover:border-accent-primary/40 hover:bg-accent-primary/5"
             }`}
           >
             {option.label}
