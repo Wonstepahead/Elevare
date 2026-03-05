@@ -96,9 +96,9 @@ export default function CoachPage() {
             {messages.length === 0 && (
               <div className="text-center text-muted py-12">
                 <p className="mb-2">Start a conversation:</p>
-                <p className="text-sm">"What careers fit someone who likes problem-solving?"</p>
-                <p className="text-sm">"Should I major in Computer Science or Data Science?"</p>
-                <p className="text-sm">"How do I get into a career in healthcare?"</p>
+                <p className="text-sm">&quot;What careers fit someone who likes problem-solving?&quot;</p>
+                <p className="text-sm">&quot;Should I major in Computer Science or Data Science?&quot;</p>
+                <p className="text-sm">&quot;How do I get into a career in healthcare?&quot;</p>
               </div>
             )}
             {messages.map((m, i) => (
