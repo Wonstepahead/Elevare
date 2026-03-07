@@ -82,7 +82,7 @@ export function Navbar() {
             {DROPDOWNS.map((d) => (
               <div
                 key={d.label}
-                className="relative"
+                className="relative pt-1 pb-44 -mb-44"
                 onMouseEnter={() => setOpenDropdown(d.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
@@ -100,7 +100,7 @@ export function Navbar() {
                   </svg>
                 </button>
                 {openDropdown === d.label && (
-                  <div className="absolute top-full left-0 mt-1 py-2 w-48 rounded-xl bg-card border border-border shadow-lg animate-fade-in">
+                  <div className="absolute top-full left-0 mt-1 pt-1 py-2 w-48 rounded-xl bg-card border border-border shadow-lg animate-fade-in">
                     {d.links.map((link) => (
                       <Link
                         key={link.href}

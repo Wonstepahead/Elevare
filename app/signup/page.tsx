@@ -21,24 +21,60 @@ function SignupForm() {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    const emailRedirectTo = typeof window !== "undefined"
-      ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
-      : undefined;
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: fullName },
-        emailRedirectTo,
-      },
-    });
-    setLoading(false);
-    if (error) {
-      setError(error.message);
-      return;
+    try {
+      const emailRedirectTo = typeof window !== "undefined"
+        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
+        : undefined;
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: fullName },
+          emailRedirectTo,
+        },
+      });
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+      if (data?.user && !data?.session && data?.user?.identities?.length === 0) {
+        setError("An account with this email already exists. Try logging in instead.");
+        setLoading(false);
+        return;
+      }
+      setSuccess(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+      router.refresh();
     }
-    setSuccess(true);
-    router.refresh();
+  }
+
+  async function handleResendEmail() {
+    setError(null);
+    setLoading(true);
+    try {
+      const emailRedirectTo = typeof window !== "undefined"
+        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
+        : undefined;
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email,
+        options: { emailRedirectTo },
+      });
+      if (error) {
+        setError(error.message);
+      } else {
+        setError(null);
+        router.refresh();
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to resend.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (success) {
@@ -52,12 +88,26 @@ function SignupForm() {
           <p className="text-sm text-muted mb-6">
             Can&apos;t find it? Check your spam folder. The link expires in 24 hours.
           </p>
-          <Link
-            href="/login"
-            className="inline-block px-6 py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-secondary transition shadow-soft"
-          >
-            Go to Log in
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              type="button"
+              onClick={handleResendEmail}
+              disabled={loading}
+              className="px-6 py-3 rounded-xl border border-border text-foreground font-medium hover:bg-muted/30 transition disabled:opacity-50"
+            >
+              {loading ? "Sending..." : "Resend email"}
+            </button>
+            <Link
+              href="/login"
+              className="inline-block px-6 py-3 rounded-xl bg-accent-primary text-white font-medium hover:bg-accent-secondary transition shadow-soft"
+            >
+              Go to Log in
+            </Link>
+          </div>
+          {error && <p className="mt-4 text-red-500 text-sm">{error}</p>}
+          <p className="mt-6 text-xs text-muted">
+            Still not working? In Supabase Dashboard → Auth → Providers → Email, ensure &quot;Confirm email&quot; is configured and your app URL is in Redirect URLs.
+          </p>
         </div>
       </div>
     );
