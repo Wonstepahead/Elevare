@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function SignupPage() {
@@ -13,16 +13,24 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/results";
   const supabase = createClient();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    const emailRedirectTo = typeof window !== "undefined"
+      ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
+      : undefined;
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName } },
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo,
+      },
     });
     setLoading(false);
     if (error) {
@@ -38,8 +46,11 @@ export default function SignupPage() {
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="w-full max-w-md text-center">
           <h1 className="text-2xl font-bold mb-4 text-foreground">Check your email</h1>
-          <p className="text-muted mb-6">
-            We&apos;ve sent you a link to confirm your account. Click the link in your email to get started.
+          <p className="text-muted mb-4">
+            We&apos;ve sent a confirmation link to <strong className="text-foreground">{email}</strong>. Click the link to activate your account.
+          </p>
+          <p className="text-sm text-muted mb-6">
+            Can&apos;t find it? Check your spam folder. The link expires in 24 hours.
           </p>
           <Link
             href="/login"

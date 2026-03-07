@@ -39,14 +39,20 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 2. Run the migration: `supabase/migrations/001_initial_schema.sql`
 3. Run the seed: `supabase/seed.sql`
 
-### 4. Configure Supabase Auth (for production)
+### 4. Configure Supabase Auth (required for signup/login)
 
-In Supabase Dashboard → Authentication → URL Configuration:
+In Supabase Dashboard → **Authentication** → **URL Configuration**:
 
-- **Site URL**: `https://your-vercel-domain.vercel.app` (or `http://localhost:3000` for local)
-- **Redirect URLs**: Add:
-  - `https://your-vercel-domain.vercel.app/auth/callback`
+- **Site URL**: Your app URL (e.g. `https://your-app.vercel.app` or `http://localhost:3000`)
+- **Redirect URLs**: Add these (replace with your actual URLs):
+  - `https://your-app.vercel.app/auth/callback`
   - `http://localhost:3000/auth/callback`
+
+**Signup not working?** Ensure:
+1. Redirect URLs above are added exactly (no trailing slash)
+2. Email provider is enabled: Authentication → Providers → Email
+3. Check spam folder for the confirmation email
+4. (Optional) To skip email confirmation during development: Authentication → Providers → Email → disable "Confirm email"
 
 ### 5. Run locally
 
