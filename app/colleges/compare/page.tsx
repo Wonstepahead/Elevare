@@ -6,6 +6,21 @@ import { useSearchParams } from "next/navigation";
 import { colleges } from "@/lib/data/colleges";
 import type { College } from "@/lib/types";
 
+function listTier(c: College): "reach" | "target" | "safety" {
+  if (c.list_tier) return c.list_tier;
+  const ar = c.acceptance_rate;
+  if (ar == null) return "target";
+  if (ar >= 50) return "safety";
+  if (ar >= 15) return "target";
+  return "reach";
+}
+
+const TIER_SECTIONS: { tier: "reach" | "target" | "safety"; title: string; hint: string }[] = [
+  { tier: "reach", title: "Reach / highly selective", hint: "Lower acceptance — stretch goals" },
+  { tier: "target", title: "Target / match", hint: "Solid fit for many students" },
+  { tier: "safety", title: "Safety / higher admit rates", hint: "Strong options where admission is more likely" },
+];
+
 const TYPE_LABELS: Record<string, string> = {
   public: "Public",
   private: "Private",
@@ -48,25 +63,35 @@ function CompareContent() {
           Select up to 4 colleges to compare side-by-side. Great for narrowing down your list.
         </p>
 
-        <div className="mb-8 p-4 rounded-xl bg-card border border-border">
-          <p className="text-sm font-medium text-foreground mb-3">
+        <div className="mb-8 p-4 rounded-xl bg-card border border-border space-y-6">
+          <p className="text-sm font-medium text-foreground">
             Add colleges to compare (max 4):
           </p>
-          <div className="flex flex-wrap gap-2">
-            {colleges.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => toggleCollege(c.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-                  selected.includes(c.id)
-                    ? "bg-accent-primary text-white"
-                    : "bg-muted text-muted-foreground hover:bg-border"
-                }`}
-              >
-                {c.name}
-              </button>
-            ))}
-          </div>
+          {TIER_SECTIONS.map(({ tier, title, hint }) => {
+            const inTier = colleges.filter((c) => listTier(c) === tier);
+            if (inTier.length === 0) return null;
+            return (
+              <div key={tier}>
+                <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-1">{title}</p>
+                <p className="text-xs text-muted mb-2">{hint}</p>
+                <div className="flex flex-wrap gap-2">
+                  {inTier.map((c) => (
+                    <button
+                      key={c.id}
+                      onClick={() => toggleCollege(c.id)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                        selected.includes(c.id)
+                          ? "bg-accent-primary text-white"
+                          : "bg-muted text-muted-foreground hover:bg-border"
+                      }`}
+                    >
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {selectedColleges.length > 0 ? (

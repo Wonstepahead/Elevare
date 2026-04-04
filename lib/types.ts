@@ -51,6 +51,8 @@ export interface College {
   name: string;
   location: string;
   type: "public" | "private" | "liberal-arts" | "tech" | "art" | "music";
+  /** Rough list tier for comparison lists (reach / target / safety). */
+  list_tier?: "reach" | "target" | "safety";
   acceptance_rate?: number;
   cost_annual?: number;
   student_body?: number;

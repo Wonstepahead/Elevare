@@ -82,7 +82,7 @@ export function Navbar() {
             {DROPDOWNS.map((d) => (
               <div
                 key={d.label}
-                className="relative pt-1 pb-44 -mb-44"
+                className="relative"
                 onMouseEnter={() => setOpenDropdown(d.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
@@ -100,20 +100,22 @@ export function Navbar() {
                   </svg>
                 </button>
                 {openDropdown === d.label && (
-                  <div className="absolute top-full left-0 mt-1 pt-1 py-2 w-48 rounded-xl bg-card border border-border shadow-lg animate-fade-in">
-                    {d.links.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className={`block px-4 py-2.5 text-sm transition ${
-                          isActive(link.href)
-                            ? "text-accent-primary bg-accent-primary/5 font-medium"
-                            : "text-muted hover:text-foreground hover:bg-muted/20"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
+                  <div className="absolute left-0 top-full z-[60] w-48 -mt-px animate-fade-in">
+                    <div className="rounded-b-xl rounded-t-none border border-t-0 border-border bg-card py-2 shadow-lg">
+                      {d.links.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className={`block px-4 py-2.5 text-sm transition ${
+                            isActive(link.href)
+                              ? "text-accent-primary bg-accent-primary/5 font-medium"
+                              : "text-muted hover:text-foreground hover:bg-muted/20"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
