@@ -1,8 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
 import { getSupabasePublicConfig } from "@/lib/supabase/env";
-import { NextResponse } from "next/server";
+import { createRouteHandlerSupabaseClient } from "@/lib/supabase/route-handler";
+import { NextResponse, type NextRequest } from "next/server";
 
-export async function POST(request: Request) {
+export const dynamic = "force-dynamic";
+
+export async function POST(request: NextRequest) {
   let body: unknown;
   try {
     body = await request.json();
@@ -38,7 +40,9 @@ export async function POST(request: Request) {
   const origin = new URL(request.url).origin;
   const emailRedirectTo = `${origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`;
 
-  const supabase = await createClient();
+  const response = NextResponse.json({ ok: true });
+  const supabase = createRouteHandlerSupabaseClient(request, response);
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -59,5 +63,5 @@ export async function POST(request: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true });
+  return response;
 }

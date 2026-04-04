@@ -1,8 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
 import { getSupabasePublicConfig } from "@/lib/supabase/env";
-import { NextResponse } from "next/server";
+import { createRouteHandlerSupabaseClient } from "@/lib/supabase/route-handler";
+import { NextResponse, type NextRequest } from "next/server";
 
-export async function POST(request: Request) {
+export const dynamic = "force-dynamic";
+
+export async function POST(request: NextRequest) {
   let body: unknown;
   try {
     body = await request.json();
@@ -30,12 +32,14 @@ export async function POST(request: Request) {
     );
   }
 
-  const supabase = await createClient();
+  const response = NextResponse.json({ ok: true });
+  const supabase = createRouteHandlerSupabaseClient(request, response);
+
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 401 });
   }
 
-  return NextResponse.json({ ok: true });
+  return response;
 }
