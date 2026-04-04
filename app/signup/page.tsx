@@ -3,8 +3,6 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
-
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,40 +13,36 @@ function SignupForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || "/results";
-  const supabase = createClient();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setLoading(true);
     try {
-      const emailRedirectTo = typeof window !== "undefined"
-        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
-        : undefined;
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: { full_name: fullName },
-          emailRedirectTo,
-        },
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          fullName,
+          redirectTo,
+        }),
+        credentials: "same-origin",
       });
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
-      if (data?.user && !data?.session && data?.user?.identities?.length === 0) {
-        setError("An account with this email already exists. Try logging in instead.");
-        setLoading(false);
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        setError(data.error ?? "Sign up failed.");
         return;
       }
       setSuccess(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      router.refresh();
+    } catch {
+      setError(
+        "Could not reach the server. Check your connection, or confirm Supabase env vars are set on the host (NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY)."
+      );
     } finally {
       setLoading(false);
-      router.refresh();
     }
   }
 
@@ -56,22 +50,23 @@ function SignupForm() {
     setError(null);
     setLoading(true);
     try {
-      const emailRedirectTo = typeof window !== "undefined"
-        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirectTo)}`
-        : undefined;
-      const { error } = await supabase.auth.resend({
-        type: "signup",
-        email,
-        options: { emailRedirectTo },
+      const res = await fetch("/api/auth/resend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, redirectTo }),
+        credentials: "same-origin",
       });
-      if (error) {
-        setError(error.message);
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        setError(data.error ?? "Failed to resend.");
       } else {
         setError(null);
         router.refresh();
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to resend.");
+    } catch {
+      setError(
+        "Could not reach the server. Check your connection and Supabase configuration."
+      );
     } finally {
       setLoading(false);
     }
